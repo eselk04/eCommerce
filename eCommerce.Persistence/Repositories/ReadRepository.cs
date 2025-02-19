@@ -10,6 +10,11 @@ namespace eCommerce.Infrastructure.Repositories;
 public class ReadRepository<T> : IReadRepository<T> where T : class , IBaseEntity , new()
 {
     private readonly AppDbContext context;
+
+    public ReadRepository(AppDbContext context)
+    {
+        this.context = context;
+    }
     
     
     private DbSet<T> Table => context.Set<T>();
