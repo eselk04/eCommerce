@@ -15,10 +15,10 @@ public interface IReadRepository<T> where T : class , IBaseEntity ,new()
         , Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, bool enableTracking = false, int page = 1,
         int pageSize = 10);
     
-    public Task<IList<T>> GetAsync(Expression<Func<T, bool>>? predicate,
+    public Task<T> GetAsync(Expression<Func<T, bool>>? predicate,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null
-        , Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, bool enableTracking = false);
+        , bool enableTracking = false);
     
-    IQueryable<T> Find(Expression<Func<T, bool>> predicate);
+    IQueryable<T> Find(Expression<Func<T, bool>> predicate,bool enableTracking = false);
     Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
 }

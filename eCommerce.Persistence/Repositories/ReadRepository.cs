@@ -18,8 +18,8 @@ public class ReadRepository<T> : IReadRepository<T> where T : class , IBaseEntit
         IQueryable<T> query = Table;
         if (!enableTracking) query = query.AsNoTracking();
         if(predicate is null) query = query.Where(predicate);
-        if(orderBy is null) query = query.OrderBy(predicate);
-        if(include is null) query = query.Include(predicate);
+        if(include is null) query = include(query);
+        if(orderBy is null) return await orderBy(query).ToListAsync();
         
         return await query.ToListAsync();
     }
@@ -30,24 +30,31 @@ public class ReadRepository<T> : IReadRepository<T> where T : class , IBaseEntit
         IQueryable<T> query = Table;
         if (!enableTracking) query = query.AsNoTracking();
         if(predicate is null) query = query.Where(predicate);
-        if(orderBy is null) query = query.OrderBy(predicate);
-        if(include is null) query = query.Include(predicate);
+        if(include is null) query = include(query);
+        if(orderBy is null) return await orderBy(query.Skip((page-1)*pageSize).Take(pageSize)).ToListAsync();
         
-        return await query.Skip(page*pageSize).Take(pageSize).ToListAsync();
+        return await query.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
-    public Task<IList<T>> GetAsync(Expression<Func<T, bool>>? predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, bool enableTracking = false)
+    public async Task<T> GetAsync(Expression<Func<T, bool>>? predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, bool enableTracking = false)
     {
-        throw new NotImplementedException();
+        IQueryable<T> query = Table;
+        if (!enableTracking) query = query.AsNoTracking();
+        if(include is null) query = include(query);
+        return await query.FirstOrDefaultAsync(predicate);
     }
 
-    public IQueryable<T> Find(Expression<Func<T, bool>> predicate)
+    public IQueryable<T> Find(Expression<Func<T, bool>> predicate,bool enableTracking = false)
     {
-        throw new NotImplementedException();
+        if (enableTracking is false) Table.AsNoTracking();
+        return  Table.Where(predicate);
     }
 
-    public Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
+    public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
     {
-        throw new NotImplementedException();
+        Table.AsNoTracking();
+        if (predicate is not null)  return await Table.Where(predicate).CountAsync();
+        return await Table.CountAsync();
+       
     }
 }
