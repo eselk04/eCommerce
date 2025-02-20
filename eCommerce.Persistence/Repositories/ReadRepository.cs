@@ -22,7 +22,7 @@ public class ReadRepository<T> : IReadRepository<T> where T : class , IBaseEntit
     {
         IQueryable<T> query = Table;
         if (!enableTracking) query = query.AsNoTracking();
-        if(predicate is null) query = query.Where(predicate);
+        if(predicate is not null) query = query.Where(predicate);
         if(include is null) query = include(query);
         if(orderBy is null) return await orderBy(query).ToListAsync();
         
@@ -34,7 +34,7 @@ public class ReadRepository<T> : IReadRepository<T> where T : class , IBaseEntit
     {
         IQueryable<T> query = Table;
         if (!enableTracking) query = query.AsNoTracking();
-        if(predicate is null) query = query.Where(predicate);
+        if(predicate is not null) query = query.Where(predicate);
         if(include is null) query = include(query);
         if(orderBy is null) return await orderBy(query.Skip((page-1)*pageSize).Take(pageSize)).ToListAsync();
         

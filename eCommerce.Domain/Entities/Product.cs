@@ -2,8 +2,9 @@ using Domain.Entities.Common;
 
 namespace Domain.Entities;
 
-public class Product : BaseEntity
+public class Product : IBaseEntity
 {
+    public int Id { get; set; }
     public int Stock { get; set; }
     public string Title { get; set; }
     public string Description { get; set; } 
@@ -15,4 +16,5 @@ public class Product : BaseEntity
     public string ImageUrl { get; set; }
     public Brand Brand { get; set; }
     public ICollection<Category> Categories { get; set; }
+   
 }

@@ -1,21 +1,24 @@
 using Domain.Entities;
+using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Interfaces;
 using eCommerce.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerceAPI.Controllers;
-[Route("products")]
+[Route("api/[controller]/[action] ")]
 public class ProductController : Controller
 {
-    private IReadRepository<Product> _productRepository;
+    private readonly IMediator mediator;
 
-    public ProductController(IReadRepository<Product> productRepository)
+    public ProductController(IMediator mediator)
     {
-        _productRepository = productRepository;
+        this.mediator = mediator;
     }
     [HttpGet("getall")]
     public IActionResult Index()
     {
-        return  Ok(_productRepository.GetAllAsync());
+        var response = mediator.Send(new GetAllProductsQueryResponse());
+        return Ok(response);
     }
 }
