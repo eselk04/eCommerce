@@ -1,8 +1,8 @@
 namespace Domain.Entities.Common;
 
-public class BaseEntity
+public class BaseEntity : IBaseEntity
 {
-    public Guid id { get; set; }
+    public Guid Id { get; set; }
     public DateTimeOffset CreateTime { get; set; }
     public string Name { get; set; }
     public virtual DateTimeOffset UpdatedDate { get; set; }
