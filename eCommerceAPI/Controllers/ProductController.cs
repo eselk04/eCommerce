@@ -1,4 +1,5 @@
 using Domain.Entities;
+using eCommerce.Application.Features.Products.Commands;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Interfaces;
 using eCommerce.Infrastructure.Repositories;
@@ -16,9 +17,15 @@ public class ProductController : Controller
         this.mediator = mediator;
     }
    [HttpGet("getall")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> GetAllProducts()
     {
         var response = await mediator.Send(new GetAllProductsQueryRequest());
+        return Ok(response);
+    }
+    [HttpPost("create")]
+    public async Task<IActionResult> AddProduct([FromBody] CreateProductCommandRequest request)
+    {
+        var response = await mediator.Send(request);
         return Ok(response);
     }
 }

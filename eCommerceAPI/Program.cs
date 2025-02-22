@@ -7,11 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(options =>
-    {
-        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-    });
+builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddCustomMapper();
 builder.Services.AddPersistence(builder.Configuration);
