@@ -25,6 +25,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandR
                   await unitOfWork.GetWriteRepository<ProductCategory>().AddAsync
                   (new ProductCategory() {ProductId = product.Id, CategoryId = item});
               }
+              await unitOfWork.SaveAsync();
               return new CreateProductCommandResponse($"Success: {result} {(result == 1 ? "item" : "items")} added.");
           }
 
