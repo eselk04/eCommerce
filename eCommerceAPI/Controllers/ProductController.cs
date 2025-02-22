@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerceAPI.Controllers;
-[Route("api/[controller]/[action] ")]
+[Route("api/products")]
 public class ProductController : Controller
 {
     private readonly IMediator mediator;
@@ -15,10 +15,10 @@ public class ProductController : Controller
     {
         this.mediator = mediator;
     }
-    [HttpGet("getall")]
-    public IActionResult Index()
+   [HttpGet("getall")]
+    public async Task<IActionResult> Index()
     {
-        var response = mediator.Send(new GetAllProductsQueryResponse());
+        var response = await mediator.Send(new GetAllProductsQueryRequest());
         return Ok(response);
     }
 }

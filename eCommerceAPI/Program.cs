@@ -1,12 +1,19 @@
 using eCommerce.Application;
 using eCommerce.Persistence;
+using Mapper;using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    });
 builder.Services.AddApplication();
+builder.Services.AddCustomMapper();
 builder.Services.AddPersistence(builder.Configuration);
 
 
@@ -20,6 +27,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+
 
 
 app.UseHttpsRedirection();

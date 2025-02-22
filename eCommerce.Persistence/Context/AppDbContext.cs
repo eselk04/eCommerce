@@ -1,3 +1,4 @@
+using System.Reflection;
 using Domain.Entities;
 using Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
@@ -16,5 +17,9 @@ public class AppDbContext : DbContext
     public DbSet<Brand> Brands{ get; set; }
     public DbSet<Detail> Details { get; set; }
     
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }

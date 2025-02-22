@@ -16,10 +16,10 @@ public class UnitOfWork : IUnitOfWork
     }
     public async ValueTask DisposeAsync() => await _context.DisposeAsync();
 
-    public IReadRepository<TEntity> GetReadRepository<TEntity>() where TEntity : class, IBaseEntity, new() =>
+     IReadRepository<TEntity> IUnitOfWork.GetReadRepository<TEntity>() =>
         new ReadRepository<TEntity>(_context);
 
-    public IWriteRepository<TEntity> GetWriteRepository<TEntity>() where TEntity : class, IBaseEntity, new() => new WriteRepository<TEntity>(_context);
+     IWriteRepository<TEntity> IUnitOfWork.GetWriteRepository<TEntity>() => new WriteRepository<TEntity>(_context);
 
     public async Task<int> SaveAsync() => await _context.SaveChangesAsync();
     public int Save() => _context.SaveChanges();
