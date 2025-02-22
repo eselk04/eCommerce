@@ -9,5 +9,5 @@ public class Category : BaseEntity
     public string Name { get; set; }
     public int Priority { get; set; }
     public ICollection<Detail> Details { get; set; }
-    public ICollection<Product> Products { get; set; }
+    public ICollection<ProductCategory> ProductCategories { get; set; }
 }

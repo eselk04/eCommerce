@@ -15,6 +15,6 @@ public class Product : IBaseEntity
     public int BrandId { get; set; }    
     public string ImageUrl { get; set; }
     public Brand Brand { get; set; }
-    public ICollection<Category> Categories { get; set; }
+    public ICollection<ProductCategory> ProductCategories { get; set; }
    
 }
