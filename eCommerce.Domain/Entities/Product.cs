@@ -33,6 +33,8 @@ public class Product : IBaseEntity
     public int BrandId { get; set; }    
     public string ImageUrl { get; set; }
     public Brand Brand { get; set; }
+    
+    public bool isDeleted { get; set; }
     public ICollection<ProductCategory> ProductCategories { get; set; }
    
 }

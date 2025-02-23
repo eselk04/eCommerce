@@ -1,5 +1,7 @@
 using Domain.Entities;
 using eCommerce.Application.Features.Products.Commands;
+using eCommerce.Application.Features.Products.Commands.DeleteProduct;
+using eCommerce.Application.Features.Products.Commands.UpdateProduct;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Interfaces;
 using eCommerce.Infrastructure.Repositories;
@@ -28,4 +30,17 @@ public class ProductController : Controller
         var response = await mediator.Send(request);
         return Ok(response);
     }
+    [HttpPost("update")]
+    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommandRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+    [HttpPost("remove")]
+    public async Task<IActionResult> RemoveProduct([FromBody] DeleteProductCommandRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
 }
