@@ -1,4 +1,5 @@
 using eCommerce.Application;
+using eCommerce.Application.Exceptions;
 using eCommerce.Persistence;
 using Mapper;using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -30,7 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.ConfigureExceptionHandlingMiddleware();
 app.MapControllers();
 
 app.Run();

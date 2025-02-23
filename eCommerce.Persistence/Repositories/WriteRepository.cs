@@ -43,4 +43,9 @@ public class WriteRepository<T> : IWriteRepository<T> where T : class , IBaseEnt
         await Task.Run(() => Table.Remove(entity));
 
     }
+
+    public async Task HardDeleteRangeAsync(IList<T> entities)
+    {
+        await Task.Run(() => Table.RemoveRange(entities));
+    }
 }

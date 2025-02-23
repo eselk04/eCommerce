@@ -9,6 +9,7 @@ public interface IWriteRepository<T> where T : class , IBaseEntity , new()
     Task<T> UpdateAsync(T entity);
     Task UpdateRangeAsync(IList<T> entities);
     Task HardDeleteAsync(T entity);
+    Task HardDeleteRangeAsync(IList<T> entities);
     
     
 }
