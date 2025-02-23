@@ -1,4 +1,5 @@
-using System.ComponentModel.DataAnnotations;
+
+using FluentValidation;
 
 namespace eCommerce.Application.Exceptions;
 using SendGrid.Helpers.Errors.Model;
@@ -19,9 +20,18 @@ public class ExceptionMiddleware : IMiddleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+       
         int statusCode = GetStatusCode(exception);
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
+        if (exception.GetType() == typeof(ValidationException))
+        {
+            return context.Response.WriteAsync(new ExceptionModel
+            {
+                Errors = ((ValidationException)exception).Errors.Select(x=>x.ErrorMessage),
+                StatusCode = statusCode
+            }.ToString());
+        }
         List<String> messages = new()
         {
             $"Hata Mesajı : {exception.Message}",
