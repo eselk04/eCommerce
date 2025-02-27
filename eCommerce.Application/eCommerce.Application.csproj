@@ -28,4 +28,10 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Auth\Exceptions\" />
+      <Folder Include="Features\Auth\Queries\" />
+      <Folder Include="Features\Auth\Rules\" />
+    </ItemGroup>
+
 </Project>
