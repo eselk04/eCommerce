@@ -18,13 +18,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandR
     }
     public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
     {
-
         var products = await unitOfWork.GetReadRepository<Product>().GetAllAsync();
-        foreach (var p in products)
-        {
-            productRules.ProductTitleMustNotBeSame(p.Title, request.Title);
-        }
-        
+           await productRules.ProductTitleMustNotBeSame(request.Title , products);
+           
         Product product = new(request.Stock, request.Title, request.Description, request.Price, request.Discount, request.Quantity, request.BrandId,request.ImageUrl,request.CategoryIds);
          await unitOfWork.GetWriteRepository<Product>().AddAsync(product);
           var result = await unitOfWork.SaveAsync();

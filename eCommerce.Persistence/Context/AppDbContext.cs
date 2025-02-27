@@ -1,11 +1,12 @@
 using System.Reflection;
 using Domain.Entities;
 using Domain.Entities.Common;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Persistence.Context;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<User,Role, Guid>
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

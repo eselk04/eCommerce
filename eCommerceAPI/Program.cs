@@ -1,5 +1,6 @@
 using eCommerce.Application;
 using eCommerce.Application.Exceptions;
+using eCommerce.Infrastructure;
 using eCommerce.Persistence;
 using Mapper;using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddCustomMapper();
 builder.Services.AddPersistence(builder.Configuration);
 
