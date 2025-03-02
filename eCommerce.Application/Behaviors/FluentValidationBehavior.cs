@@ -19,7 +19,6 @@ public class FluentValidationBehavior<TRequest,TResponse> : IPipelineBehavior<TR
             .GroupBy(x=>x.ErrorMessage).Select(x=>x.First()).Where(f => f != null).ToList();
         if(failures.Any())
             throw new ValidationException(failures);
-    
         return next();
         }
 }
