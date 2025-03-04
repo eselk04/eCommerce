@@ -11,4 +11,10 @@ public class AuthRules : BaseRules
   if(user is null) return Task.CompletedTask;
   throw new UserAlreadyExistsException();
  }
+
+ public Task EmailOrPasswordShouldNotBeInValid(User? user, bool checkPassword)
+ {
+  if(user is null || !checkPassword) throw new EmailOrPasswordShouldNotBeInvalidException();
+  return Task.CompletedTask;
+ }
 }
