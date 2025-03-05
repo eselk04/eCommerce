@@ -1,4 +1,5 @@
 using eCommerce.Application.Features.Auth.Command.Login;
+using eCommerce.Application.Features.Auth.Command.RefreshToken;
 using eCommerce.Application.Features.Auth.Command.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,12 @@ public class AuthController : Controller
     }
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(StatusCodes.Status200OK,response);
+    }
+    [HttpPost("refreshtoken")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommandRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(StatusCodes.Status200OK,response);
