@@ -1,6 +1,8 @@
 using eCommerce.Application.Features.Auth.Command.Login;
 using eCommerce.Application.Features.Auth.Command.RefreshToken;
 using eCommerce.Application.Features.Auth.Command.Register;
+using eCommerce.Application.Features.Auth.Command.Revoke;
+using eCommerce.Application.Features.Auth.Command.RevokeAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,5 +33,17 @@ public class AuthController : Controller
     {
         var response = await _mediator.Send(request);
         return StatusCode(StatusCodes.Status200OK,response);
+    }
+    [HttpPost("revoke")]
+    public async Task<IActionResult> Revoke([FromBody] RevokeCommandRequest request)
+    {
+        await _mediator.Send(request);
+        return StatusCode(StatusCodes.Status200OK);
+    }
+    [HttpPost("revokeall")]
+    public async Task<IActionResult> RevokeAll()
+    {
+        await _mediator.Send(new RevokeAllCommandRequest());
+        return StatusCode(StatusCodes.Status200OK);
     }
 }
