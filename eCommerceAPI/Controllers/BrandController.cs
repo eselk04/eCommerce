@@ -1,5 +1,6 @@
 using Domain.Entities.Common;
 using eCommerce.Application.Features.Brands.Command;
+using eCommerce.Application.Features.Brands.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,12 @@ public class BrandController : Controller
     public async Task<IActionResult> CreateBrand([FromBody] CreateBrandCommandRequest  request)
     {
        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    [HttpGet("getall")]
+    public async Task<IActionResult> GetAllBrands()
+    {
+        var result = await _mediator.Send(new GetAllBrandsQueryRequest());
         return Ok(result);
     }
 }
