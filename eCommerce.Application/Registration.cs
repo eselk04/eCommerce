@@ -18,8 +18,12 @@ public static class Registration
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
         services.AddRulesFromAssemblyContaining(assembly, typeof(BaseRules));
         services.AddValidatorsFromAssembly(assembly);
+        
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("tr");
             services.AddTransient(typeof(IPipelineBehavior<,>),typeof(FluentValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+
+            
     }
 
     private static IServiceCollection AddRulesFromAssemblyContaining(this IServiceCollection services,
