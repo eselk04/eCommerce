@@ -5,5 +5,5 @@ namespace eCommerce.Application.Features.Products.Queries.GetAllProducts;
 
 public class GetAllProductsQueryRequest : IRequest<IList<GetAllProductsQueryResponse>> , IRequireRole
 {
-    public string RequiredRole => "user";
+    public IList<string> RequiredRoles => new List<string>(){  "user" };
 }
