@@ -6,8 +6,9 @@ using eCommerce.Application.Exceptions;
 using eCommerce.Application.Features.Products.Rules;
 using FluentValidation;
 using MediatR;
-
+using Serilog.Events;
 namespace eCommerce.Application;
+using Serilog;
 
 public static class Registration
 {
@@ -18,10 +19,21 @@ public static class Registration
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
         services.AddRulesFromAssemblyContaining(assembly, typeof(BaseRules));
         services.AddValidatorsFromAssembly(assembly);
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning) 
+            .WriteTo.File(
+                path: "/home/eselk/logs/log.json",
+                rollingInterval: RollingInterval.Day,
+                formatter: new Serilog.Formatting.Json.JsonFormatter())
+            .CreateLogger();
         
+      
+  
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("tr");
             services.AddTransient(typeof(IPipelineBehavior<,>),typeof(FluentValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
             
     }

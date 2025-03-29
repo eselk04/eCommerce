@@ -3,8 +3,10 @@ using eCommerce.Application.Exceptions;
 using eCommerce.Infrastructure;
 using eCommerce.Infrastructure.Enums;
 using eCommerce.Persistence;
-using Mapper;using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Mapper;
+using Serilog;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Host.UseSerilog(); 
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -29,8 +33,6 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-
 
 
 app.UseHttpsRedirection();
